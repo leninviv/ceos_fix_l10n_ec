@@ -1,4 +1,4 @@
-0EOS Fix EDI Ecuador se acopla a la localización contable y de facturación electrónica oficial de Odoo 19. No reemplaza l10n\_ec: hereda facturas, notas de crédito, notas de débito, retenciones, liquidaciones de compra y guías de remisión, y corrige y amplía el XML y el RIDE.
+CEOS Fix EDI Ecuador se acopla a la localización contable y de facturación electrónica oficial de Odoo 19. No reemplaza l10n\_ec: hereda facturas, notas de crédito, notas de débito, retenciones, liquidaciones de compra y guías de remisión, y corrige y amplía el XML y el RIDE.
 
 
 
@@ -14,7 +14,7 @@ También ajusta etiquetas del RIDE (RUC, cliente y fecha de autorización) e inc
 
 
 
-Para soporte, implementación o mas módulos de Odoo pueden contactarnos. Con gusto les atenderemos
+Para soporte, implementación o mas módulos de Odoo pueden contactarnos. Con gusto les atenderemos.
 
 
 
