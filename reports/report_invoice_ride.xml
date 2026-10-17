@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Encabezado RIDE: RUC + logo opcional -->
+        <template id="ceos_report_invoice_header"
+                  inherit_id="l10n_ec_edi.report_invoice_header"
+                  priority="20">
+
+            <xpath expr="//td[@class='text-center p-1']/h4" position="before">
+                <div t-if="o.company_id.logo" class="mb-2">
+                    <img t-att-src="image_data_uri(o.company_id.logo)"
+                         style="max-height: 64px; max-width: 100%;"
+                         alt="Logo"/>
+                </div>
+            </xpath>
+
+            <xpath expr="//strong[t[@id='inv_tax_id_label']]" position="replace">
+                <strong>RUC:</strong>
+            </xpath>
+
+        </template>
+
+        <!-- Cuerpo RIDE -->
+        <template id="ceos_report_invoice_document"
+                  inherit_id="l10n_ec_edi.report_invoice_document"
+                  priority="30">
+
+            <xpath expr="//div[@name='partner_name']" position="replace">
+                <div class="col" name="partner_name">
+                    <strong>Cliente</strong>
+                    <div>
+                        <t t-esc="o.partner_id.name"/>
+                        <div t-if="o.partner_id.vat">
+                            Registro Único de Contribuyentes:
+                            <span t-field="o.partner_id.vat"/>
+                        </div>
+                        <div t-out="o.partner_id.street"/>
+                    </div>
+                </div>
+                <div class="col" t-if="o.l10n_ec_authorization_date" name="ceos_authorization_date">
+                    <strong>Fecha de autorización</strong>
+                    <!--
+                      BD guarda hora America/Guayaquil (como viene del SRI).
+                      No usar widget datetime con TZ usuario: Odoo asume UTC y resta 5h.
+                      tz_name UTC = imprimir el valor tal cual está en BD (hora Ecuador).
+                    -->
+                    <div t-field="o.l10n_ec_authorization_date"
+                         t-options="{'widget': 'datetime', 'tz_name': 'UTC', 'format': 'dd/MM/yyyy HH:mm:ss'}"/>
+                </div>
+            </xpath>
+
+            <!-- Etiquetas en español -->
+            <xpath expr="//th[@name='th_auxiliary_code']/span" position="replace">
+                <span>Código auxiliar</span>
+            </xpath>
+            <xpath expr="//table[@name='invoice_line_table']/thead/tr/th[@name='th_description'][1]/span" position="replace">
+                <span>Código principal</span>
+            </xpath>
+
+            <!--
+              Código principal vacío: productos sin barcode/default_code.
+              Forzar N/A y priorizar default_code (referencia interna) como en el XML SRI.
+            -->
+            <xpath expr="//t[@name='account_invoice_line_accountable']/td[not(@name)][1]/span" position="replace">
+                <span t-esc="(line.product_id.default_code or line.product_id.barcode or 'N/A')[:25]"/>
+            </xpath>
+
+        </template>
+
+    </data>
+</odoo>

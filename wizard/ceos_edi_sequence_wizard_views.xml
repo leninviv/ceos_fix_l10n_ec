@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_ceos_edi_sequence_wizard_form" model="ir.ui.view">
+        <field name="name">ceos.edi.sequence.wizard.form</field>
+        <field name="model">ceos.edi.sequence.wizard</field>
+        <field name="arch" type="xml">
+            <form string="CEOS Secuencias documentos">
+                <group>
+                    <group string="Contexto">
+                        <field name="company_id" groups="base.group_multi_company"/>
+                        <field name="sale_journal_id"/>
+                        <field name="establishment_label" readonly="1"/>
+                        <field name="liquidation_journal_id"/>
+                        <field name="withhold_purchase_journal_id"/>
+                        <field name="withhold_sale_journal_id"/>
+                        <field name="has_delivery_guide" invisible="1"/>
+                        <field name="warehouse_label" invisible="not has_delivery_guide" readonly="1"/>
+                    </group>
+                </group>
+
+                <group string="1. Factura / NC / ND">
+                    <group>
+                        <field name="current_next_invoice" readonly="1"/>
+                        <field name="next_invoice" placeholder="001-002-000000075"/>
+                    </group>
+                    <group>
+                        <field name="current_next_credit_note" readonly="1"/>
+                        <field name="next_credit_note" placeholder="001-002-000000001"/>
+                        <field name="current_next_debit_note" readonly="1"/>
+                        <field name="next_debit_note" placeholder="001-002-000000001"/>
+                    </group>
+                </group>
+
+                <group string="2. Liquidación de compra" invisible="not liquidation_journal_id">
+                    <field name="current_next_purchase_liquidation" readonly="1"/>
+                    <field name="next_purchase_liquidation" placeholder="001-001-000000001"/>
+                </group>
+
+                <group string="3. Retención">
+                    <group invisible="not withhold_purchase_journal_id">
+                        <field name="current_next_withhold_purchase" readonly="1"/>
+                        <field name="next_withhold_purchase" placeholder="001-001-000000001"/>
+                    </group>
+                    <group invisible="not withhold_sale_journal_id">
+                        <field name="current_next_withhold_sale" readonly="1"/>
+                        <field name="next_withhold_sale" placeholder="001-001-000000001"/>
+                    </group>
+                </group>
+
+                <group string="4. Guía de remisión" invisible="not has_delivery_guide">
+                    <field name="current_next_delivery_guide" readonly="1"/>
+                    <field name="next_delivery_guide" placeholder="001-001-000000001"/>
+                </group>
+
+                <div class="alert alert-warning" role="alert">
+                    <p>
+                        Fija el <strong>siguiente</strong> número (mismo efecto que ajustar en BD).
+                        Solo se puede <strong>avanzar</strong>.
+                    </p>
+                    <p>
+                        Formato: <code>establecimiento-emisión-9 dígitos</code>
+                        (ej. <code>001-002-000000075</code>).
+                    </p>
+                    <p>
+                        <em>Retención venta:</em> en Odoo es manual; el valor se guarda como
+                        sugerencia para el wizard de retención.
+                    </p>
+                </div>
+                <footer>
+                    <button name="action_apply"
+                            string="Guardar secuencias"
+                            type="object"
+                            class="btn-primary"
+                            data-hotkey="q"/>
+                    <button string="Cancelar" special="cancel" data-hotkey="z"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ceos_edi_sequence_wizard" model="ir.actions.act_window">
+        <field name="name">CEOS Secuencias documentos</field>
+        <field name="res_model">ceos.edi.sequence.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_ceos_edi_sequence_wizard"
+              name="CEOS Secuencias documentos"
+              parent="account.menu_finance_configuration"
+              action="action_ceos_edi_sequence_wizard"
+              sequence="90"
+              groups="account.group_account_manager"/>
+</odoo>

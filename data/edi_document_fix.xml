@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- codDocReembolso solo aplica en liquidación de compra -->
+        <template id="ceos_reimbursement_common_info_template_fix"
+                  inherit_id="l10n_ec_edi.reimbursement_common_info_template"
+                  priority="20">
+            <xpath expr="//codDocReembolso" position="attributes">
+                <attribute name="t-if">is_liquidation and not is_withhold</attribute>
+            </xpath>
+        </template>
+
+        <!-- Orden XSD: totalConImpuestos -> reembolsos -> propina -> importeTotal -->
+        <template id="ceos_common_info_template_fix"
+                  inherit_id="l10n_ec_edi.common_info_template"
+                  priority="20">
+
+            <xpath expr="//t[@t-call='l10n_ec_edi.reimbursement_common_info_template']" position="replace"/>
+
+            <xpath expr="//totalConImpuestos" position="after">
+                <t t-if="reimbursement_vals['lines_ids'] and not is_withhold"
+                   t-call="l10n_ec_edi.reimbursement_common_info_template"/>
+            </xpath>
+
+            <xpath expr="//importeTotal" position="before">
+                <propina t-if="is_invoice or is_liquidation" t-out="format_num_2(ceos_propina or 0.0)"/>
+            </xpath>
+
+        </template>
+
+    </data>
+</odoo>

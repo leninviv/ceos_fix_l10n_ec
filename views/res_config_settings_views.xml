@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_ceos_edi_modes" model="ir.ui.view">
+        <field name="name">res.config.settings.ceos.edi.modes</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="l10n_ec_edi.res_config_settings_l10n_ec_edi"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='l10n_ec_edi_settings']" position="inside">
+                <setting id="ceos_edi_modes" string="CEOS EDI por documento"
+                         help="Define si Odoo autoriza en el SRI, solo deja el XML en carpeta, o no genera XML (solo contabilidad).">
+                    <div class="content-group">
+                        <div class="row mt8">
+                            <label for="ceos_edi_mode_invoice" class="col-lg-4 o_light_label"/>
+                            <field name="ceos_edi_mode_invoice" class="col-lg-8"/>
+                        </div>
+                        <div class="row">
+                            <label for="ceos_edi_mode_credit_note" class="col-lg-4 o_light_label"/>
+                            <field name="ceos_edi_mode_credit_note" class="col-lg-8"/>
+                        </div>
+                        <div class="row">
+                            <label for="ceos_edi_mode_debit_note" class="col-lg-4 o_light_label"/>
+                            <field name="ceos_edi_mode_debit_note" class="col-lg-8"/>
+                        </div>
+                        <div class="row">
+                            <label for="ceos_edi_mode_withhold" class="col-lg-4 o_light_label"/>
+                            <field name="ceos_edi_mode_withhold" class="col-lg-8"/>
+                        </div>
+                        <div class="row">
+                            <label for="ceos_edi_mode_liquidation" class="col-lg-4 o_light_label"/>
+                            <field name="ceos_edi_mode_liquidation" class="col-lg-8"/>
+                        </div>
+                        <div class="row">
+                            <label for="ceos_edi_mode_delivery_guide" class="col-lg-4 o_light_label"/>
+                            <field name="ceos_edi_mode_delivery_guide" class="col-lg-8"/>
+                        </div>
+                        <div class="row mt16">
+                            <label for="ceos_edi_xml_export_path" class="col-lg-4 o_light_label"/>
+                            <field name="ceos_edi_xml_export_path" class="col-lg-8"
+                                     placeholder="/var/ceos/sri/out"/>
+                        </div>
+                        <div class="row mt16">
+                            <label for="ceos_edi_additional_ruc_proveedor" class="col-lg-4 o_light_label"/>
+                            <field name="ceos_edi_additional_ruc_proveedor" class="col-lg-8"
+                                     placeholder="1111111111001"/>
+                        </div>
+                        <div class="text-muted">
+                            Opción 2 requiere directorio escribible por el servicio Odoo.
+                            Opción 3: el XML/autorización los genera otro sistema (p.ej. POS).
+                            RUC Proveedor se inserta en infoAdicional de los 6 comprobantes electrónicos.
+                        </div>
+                    </div>
+                </setting>
+                <setting id="ceos_purchase_api" string="CEOS API compras (XML SRI)"
+                         help="Al consumir POST /api/compras: borrador para revisar o publicar el asiento.">
+                    <div class="content-group">
+                        <div class="row mt8">
+                            <label for="ceos_purchase_api_post_mode" class="col-lg-4 o_light_label"/>
+                            <field name="ceos_purchase_api_post_mode" class="col-lg-8"/>
+                        </div>
+                    </div>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>

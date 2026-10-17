@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- El template estándar solo pone Pedido/Novedades; CEOS añade RUC Proveedor y demás infoAdicional. -->
+    <template id="sri_delivery_guide_ceos_additional" inherit_id="l10n_ec_edi_stock.sri_delivery_guide">
+        <xpath expr="//infoAdicional" position="replace">
+            <infoAdicional t-if="additional_info">
+                <campoAdicional
+                    t-foreach="additional_info.items()"
+                    t-as="additional_item"
+                    t-att-nombre="additional_item[0]"
+                    t-out="additional_item[1]"/>
+            </infoAdicional>
+        </xpath>
+    </template>
+</odoo>

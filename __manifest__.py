@@ -1,0 +1,28 @@
+{
+    "name": "CEOS Fix l10n_ec EDI",
+    "version": "19.0.2.2.8",
+    "summary": "Fix XML Ecuador EDI, RIDE, secuencias, modos EDI e infoAdicional RUC Proveedor",
+    "category": "Localization",
+    "author": "CEOSSOLUCIONES S.A.S.",
+    "website": "https://ceossoluciones.com/",
+    "license": "LGPL-3",
+    "price": 0,
+    "currency": "EUR",
+    "depends": [
+        "account",
+        "l10n_ec",
+        "l10n_ec_edi",
+        "stock",
+        "l10n_ec_edi_stock",
+    ],
+    "data": [
+        "security/ir.model.access.csv",
+        "data/edi_document_fix.xml",
+        "data/edi_delivery_guide_fix.xml",
+        "reports/report_invoice_ride.xml",
+        "wizard/ceos_edi_sequence_wizard_views.xml",
+        "views/res_config_settings_views.xml",
+    ],
+    "installable": True,
+    "application": False,
+}
