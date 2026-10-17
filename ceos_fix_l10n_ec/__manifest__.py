@@ -23,6 +23,9 @@
         "wizard/ceos_edi_sequence_wizard_views.xml",
         "views/res_config_settings_views.xml",
     ],
+    "images": [
+        "static/description/banner.png",
+    ],
     "installable": True,
     "application": False,
 }
